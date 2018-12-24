@@ -32,8 +32,7 @@ export type ActionPayloadType = string |
 
 export type GeneralActionType = {type: string, payload?: ActionPayloadType}
 
-export type GetAuthenticationStateSelectorType = (state: Record<any>) => AuthenticationRecordStateType;
-export type c1 = (state: AuthenticationRecordStateType) => boolean;
+export type GetAuthenticationStateSelectorType = (state: GenericImmutableStateType) => AuthenticationRecordStateType;
 
 export type AuthenticationStateSelectorType = OutputSelector<GenericImmutableStateType, GetAuthenticationStateSelectorType, AuthenticationRecordStateType>;
 export type AuthenticationTokenSelectorType = OutputSelector<GenericImmutableStateType, GetAuthenticationStateSelectorType, string>;

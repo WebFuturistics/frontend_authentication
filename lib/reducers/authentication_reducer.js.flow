@@ -3,7 +3,7 @@
 // @flow
 
 // external imports
-import {pathOr} from 'ramda';
+import {is} from 'ramda';
 import {Record} from 'immutable';
 
 // local imports
@@ -103,11 +103,19 @@ const authenticationReducer = (state: AuthenticationRecordStateType = new initia
         }
 
         case WF_SUCCESS_AUTHENTICATE_USER: {
-            return state.merge({
-                isBeingAuthenticated: false,
-                isAuthenticated: true,
-                token: pathOr(null, ['data', 'authenticationToken'])(payload),
-            });
+            if (is(Object, payload) && is(Object, payload.data)) {
+                return state.merge({
+                    isBeingAuthenticated: false,
+                    isAuthenticated: true,
+                    token: payload.data.authenticationToken,
+                });
+            } else {
+                return state.merge({
+                    isBeingAuthenticated: false,
+                    isAuthenticated: false,
+                    token: null
+                });
+            }
         }
 
         // TODO: add error handling logic

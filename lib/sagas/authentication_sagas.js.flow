@@ -5,7 +5,7 @@
 // external imports
 import type {GenericReduxActionType} from '@webfuturistics/design_components/lib/types/redux';
 
-import {isNil} from 'ramda';
+import {is, isNil} from 'ramda';
 import {takeEvery, call, put, select} from 'redux-saga/effects';
 
 import {sendGetRequestToHapiAPICors, sendPostRequestToHapiAPICors} from '@webfuturistics/design_components/lib/helpers/web_api/fetch_helpers';
@@ -55,8 +55,13 @@ function* loadAuthenticationDataFromLocalStorage(): Generator<any, any, any> {
     yield put({type: WF_REQUEST_LOAD_AUTHENTICATION_DATA_FROM_LOCAL_STORAGE});
 
     try {
-        const authenticationToken: string = getLocalStorageKey('authentication_token');
-        yield put({type: WF_SUCCESS_LOAD_AUTHENTICATION_DATA_FROM_LOCAL_STORAGE, payload: authenticationToken});
+        const authenticationToken: any = getLocalStorageKey('authentication_token');
+
+        if (is(String, authenticationToken)) {
+            yield put({type: WF_SUCCESS_LOAD_AUTHENTICATION_DATA_FROM_LOCAL_STORAGE, payload: authenticationToken});
+        } else {
+            yield put({type: WF_ERROR_LOAD_AUTHENTICATION_DATA_FROM_LOCAL_STORAGE, payload: new Error('Authentication token is empty')})
+        }
     } catch(error) {
         yield put({type: WF_ERROR_LOAD_AUTHENTICATION_DATA_FROM_LOCAL_STORAGE, payload: error});
     }
@@ -106,6 +111,11 @@ function* authenticateUser(action: GenericReduxActionType<AuthenticateUserAction
     let responseData;
 
     // prepare data
+    if (isNil(action.payload)) {
+        yield put({type: WF_ERROR_AUTHENTICATE_USER, payload: new Error('Password or login are not specified')});
+        return;
+    }
+
     const {login, password} = action.payload;
 
     try {

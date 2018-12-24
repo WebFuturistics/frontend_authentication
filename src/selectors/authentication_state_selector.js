@@ -13,8 +13,11 @@ import {createSelector} from 'reselect';
 import type {AuthenticationRecordStateType, GetAuthenticationStateSelectorType, AuthenticationStateSelectorType} from './../types/general';
 
 // selector implementation
-const reducerName: string = getValue('authenticationReducerName');
-const getAuthenticationState: GetAuthenticationStateSelectorType = (state: GenericImmutableStateType) => state.get(reducerName);
+
+const getAuthenticationState: GetAuthenticationStateSelectorType = (state: GenericImmutableStateType) => {
+    const reducerName: string = getValue('authenticationReducerName');
+    return state.get(reducerName);
+};
 
 const authenticationStateSelector: AuthenticationStateSelectorType = createSelector(
     [getAuthenticationState],
