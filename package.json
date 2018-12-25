@@ -32,7 +32,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@webfuturistics/design_components": "github:WebFuturistics/frontend_authentication",
+    "@webfuturistics/design_components": "github:WebFuturistics/js_design_components",
     "ramda": "0.26.1",
     "immutable": "3.8.2",
     "redux-saga": "0.16.2",
