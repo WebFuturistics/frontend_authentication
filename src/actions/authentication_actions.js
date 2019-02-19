@@ -31,9 +31,9 @@ export const removeAuthenticationDataFromLocalStorage = (): GenericReduxActionTy
     type: WF_REMOVE_AUTHENTICATION_DATA_FROM_LOCAL_STORAGE
 });
 
-export const authenticateUser = (login: string, password: string, ...options: any): GenericReduxActionType<AuthenticateUserActionPayloadType> => ({
+export const authenticateUser = (login: string, password: string, options: {[string]: any}): GenericReduxActionType<AuthenticateUserActionPayloadType> => ({
     type: WF_AUTHENTICATE_USER,
-    payload: {login, password, ...options},
+    payload: {login, password, options},
 });
 
 export const saveAuthenticationDataToLocalStorage = (): GenericReduxActionType<any> => ({

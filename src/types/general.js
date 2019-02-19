@@ -23,7 +23,7 @@ export type AuthenticationStateType = {
 export type AuthenticationRecordStateType = Record<AuthenticationStateType>;
 export type AuthenticationInitialRecordStateType = (state?: {[string]: mixed}) => AuthenticationRecordStateType;
 
-export type AuthenticateUserActionPayloadType = {login: string, password: string};
+export type AuthenticateUserActionPayloadType = {login: string, password: string, options: {[string]: any}};
 export type SuccessAuthenticateUserActionPayloadType = {data: {authenticationToken: string}};
 
 export type ActionPayloadType = string |

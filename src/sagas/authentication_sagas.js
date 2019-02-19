@@ -116,7 +116,7 @@ function* authenticateUser(action: GenericReduxActionType<AuthenticateUserAction
         return;
     }
 
-    const {login, password, ...options} = action.payload;
+    const {login, password, options} = action.payload;
 
     try {
         responseData = yield call(sendPostRequestToHapiAPICors, 'auth/login', [], {
