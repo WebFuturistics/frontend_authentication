@@ -116,12 +116,13 @@ function* authenticateUser(action: GenericReduxActionType<AuthenticateUserAction
         return;
     }
 
-    const {login, password} = action.payload;
+    const {login, password, ...options} = action.payload;
 
     try {
         responseData = yield call(sendPostRequestToHapiAPICors, 'auth/login', [], {
             email: login,
-            password
+            password,
+            ...options
         });
     } catch(error) {
         yield put({type: WF_ERROR_AUTHENTICATE_USER, payload: error});
